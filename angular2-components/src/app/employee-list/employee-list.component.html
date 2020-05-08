@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <h1>Nossos empregados</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Salário</th>
+          <th>Bônus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employeeService.employees; let i=index;" [id]="'tr'+i">
+          <td [innerHtml]="employee.name"></td>
+          <td [innerHtml]="employee.salary" [salaryColor]="employee.salary"></td>
+          <td [innerHtml]="employee.bonus"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<employee-new-modal></employee-new-modal>
