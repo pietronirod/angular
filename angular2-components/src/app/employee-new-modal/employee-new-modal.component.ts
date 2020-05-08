@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Employee } from '../employee'
+import { EmployeeService } from '../employee.service';
 
 declare const $
 
@@ -15,7 +16,7 @@ export class EmployeeNewModalComponent implements OnInit {
     bonus: 0
   }
 
-  constructor(private element: ElementRef) { }
+  constructor(private element: ElementRef, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
   }
@@ -26,8 +27,18 @@ export class EmployeeNewModalComponent implements OnInit {
     $(divModal).modal('show')
   }
 
+  addEmployee(event: MouseEvent): void {
+    const copy = Object.assign({}, this.employee)
+    this.employeeService.addEmployee(copy)
+    this.hide()
+  }
+
+  private hide(){
+    $(this.getDivModal()).modal('hide')
+  }
+
   private getDivModal(): HTMLElement{
     const nativeElement: HTMLElement = this.element.nativeElement
-    return nativeElement.firstChild as HTMLElement
+    return nativeElement.firstChild.firstChild as HTMLElement
   }
 }

@@ -12,13 +12,13 @@ export class EmployeeListComponent implements OnInit {
   @ViewChild(EmployeeNewModalComponent)
   employeeNewModal: EmployeeNewModalComponent
 
-  constructor(public employeeService: EmployeeService) {
-    setTimeout(()=> {
-      this.employeeNewModal.show()
-    }, 2000)
-   }
+  constructor(public employeeService: EmployeeService) {}
 
   ngOnInit(): void {
+  }
+
+  openNewModal() {
+    this.employeeNewModal.show()
   }
 
 }
