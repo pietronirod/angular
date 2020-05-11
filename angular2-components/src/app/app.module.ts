@@ -7,6 +7,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { SalaryColorDirective } from './salary-color.directive';
 import { EmployeeNewComponent } from './employee-new/employee-new.component';
 import { EmployeeNewModalComponent } from './employee-new-modal/employee-new-modal.component';
+import { AlertSuccessComponent } from './alert-success/alert-success.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { EmployeeNewModalComponent } from './employee-new-modal/employee-new-mod
     EmployeeListComponent,
     SalaryColorDirective,
     EmployeeNewComponent,
-    EmployeeNewModalComponent
+    EmployeeNewModalComponent,
+    AlertSuccessComponent
   ],
   imports: [
     BrowserModule,
