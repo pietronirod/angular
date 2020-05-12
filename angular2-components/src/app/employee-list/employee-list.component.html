@@ -15,6 +15,7 @@
           <th>Nome</th>
           <th>Salário</th>
           <th>Bônus</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,10 @@
           <td [innerHtml]="employee.name"></td>
           <td [innerHtml]="employee.salary" [salaryColor]="employee.salary"></td>
           <td [innerHtml]="employee.bonus"></td>
+          <td>
+            <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a> |
+            <a href="javascript:void(0)" (click)="openDeleteModal(employee)">Eliminar</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -29,3 +34,5 @@
 </div>
 
 <employee-new-modal (onSubmit)="onNewEmployee($event)"></employee-new-modal>
+<employee-edit [employee]="employeeToEdit" (onSubmit)="onEditEmployee($event)"></employee-edit>
+<employee-delete-modal [employee]="employeeToDelete" (onDelete)="onDeleteEmployee($event)"></employee-delete-modal>
