@@ -1,46 +1,53 @@
-import {Component, OnInit, Input, ElementRef, EventEmitter, Output} from '@angular/core';
-import {Employee, EmployeeService} from '../../services/employee.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {
+  Employee,
+  EmployeeService
+} from '../../services/employee.service';
+import {
+  ModalComponent
+} from '../modal/modal.component';
 
 declare const $;
 
 @Component({
-    selector: 'employee-delete-modal',
-    templateUrl: './employee-delete-modal.component.html',
-    styleUrls: ['./employee-delete-modal.component.css']
+  selector: 'employee-delete-modal',
+  templateUrl: './employee-delete-modal.component.html',
+  styleUrls: ['./employee-delete-modal.component.css']
 })
 export class EmployeeDeleteModalComponent implements OnInit {
 
-    @Input()
-    employee: Employee;
+  @Input()
+  employee: Employee;
 
-    @Output()
-    onDestroy: EventEmitter<Employee> = new EventEmitter<Employee>();
+  @Output()
+  onDestroy: EventEmitter < Employee > = new EventEmitter < Employee > ();
 
-    constructor(private element: ElementRef, private employeeService: EmployeeService) {
-    }
+  @ViewChild(ModalComponent)
+  modalComponent: ModalComponent
 
-    ngOnInit() {
-    }
+  constructor(private employeeService: EmployeeService) {}
 
-    destroy() {
-        const copy = Object.assign({}, this.employee);
-        this.employeeService.destroyEmployee(this.employee);
-        this.onDestroy.emit(copy);
-        this.hide();
-    }
+  ngOnInit() {}
 
-    hide() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('hide');
-    }
+  destroy() {
+    const copy = Object.assign({}, this.employee);
+    this.employeeService.destroyEmployee(this.employee);
+    this.onDestroy.emit(copy);
+    this.hide();
+  }
 
-    show() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('show');
-    }
+  hide() {
+    this.modalComponent.hide()
+  }
 
-    private getDivModal(): HTMLElement {
-        const nativeElement: HTMLElement = this.element.nativeElement;
-        return nativeElement.firstChild as HTMLElement;
-    }
+  show() {
+    this.modalComponent.show()
+  }
 }

@@ -1,49 +1,55 @@
-import {Component, ElementRef, OnInit, Output, EventEmitter} from '@angular/core';
-import {Employee, EmployeeService} from '../../services/employee.service';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
+import {
+  Employee,
+  EmployeeService
+} from '../../services/employee.service';
+import {
+  ModalComponent
+} from '../modal/modal.component';
 
 declare const $;
 
 @Component({
-    selector: 'employee-new-modal',
-    templateUrl: './employee-new-modal.component.html',
-    styleUrls: ['./employee-new-modal.component.css']
+  selector: 'employee-new-modal',
+  templateUrl: './employee-new-modal.component.html',
+  styleUrls: ['./employee-new-modal.component.css']
 })
 export class EmployeeNewModalComponent implements OnInit {
 
-    employee: Employee = {
-        name: '',
-        salary: 0,
-        bonus: 0,
-    };
+  employee: Employee = {
+    name: '',
+    salary: 0,
+    bonus: 0,
+  };
 
-    @Output()
-    onSubmit: EventEmitter<Employee> = new EventEmitter<Employee>();
+  @Output()
+  onSubmit: EventEmitter < Employee > = new EventEmitter < Employee > ();
 
-    constructor(private element: ElementRef, private employeeService: EmployeeService) {
-    }
+  @ViewChild(ModalComponent)
+  modalComponent: ModalComponent
 
-    ngOnInit() {
-    }
+  constructor(private employeeService: EmployeeService) {}
 
-    addEmployee(event) {
-        const copy = Object.assign({}, this.employee);
-        this.employeeService.addEmployee(copy);
-        this.onSubmit.emit(copy);
-        this.hide();
-    }
+  ngOnInit() {}
 
-    hide() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('hide');
-    }
+  addEmployee(event) {
+    const copy = Object.assign({}, this.employee);
+    this.employeeService.addEmployee(copy);
+    this.onSubmit.emit(copy);
+    this.hide();
+  }
 
-    show() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('show');
-    }
+  hide() {
+    this.modalComponent.hide();
+  }
 
-    private getDivModal(): HTMLElement {
-        const nativeElement: HTMLElement = this.element.nativeElement;
-        return nativeElement.firstChild.firstChild as HTMLElement;
-    }
+  show() {
+    this.modalComponent.show();
+  }
 }

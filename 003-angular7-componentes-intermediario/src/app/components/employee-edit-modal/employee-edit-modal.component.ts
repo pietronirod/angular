@@ -1,45 +1,51 @@
-import {Component, ElementRef, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import {Employee} from '../../services/employee.service';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild
+} from '@angular/core';
+import {
+  Employee
+} from '../../services/employee.service';
+import {
+  ModalComponent
+} from '../modal/modal.component';
 
 declare const $;
 
 @Component({
-    selector: 'employee-edit-modal',
-    templateUrl: './employee-edit-modal.component.html',
-    styleUrls: ['./employee-edit-modal.component.css']
+  selector: 'employee-edit-modal',
+  templateUrl: './employee-edit-modal.component.html',
+  styleUrls: ['./employee-edit-modal.component.css']
 })
 export class EmployeeEditModalComponent implements OnInit {
 
-    @Input()
-    employee: Employee;
+  @Input()
+  employee: Employee;
 
-    @Output()
-    onSubmit: EventEmitter<Employee> = new EventEmitter<Employee>();
+  @Output()
+  onSubmit: EventEmitter < Employee > = new EventEmitter < Employee > ();
 
-    constructor(private element: ElementRef) {
-    }
+  @ViewChild(ModalComponent)
+  modalComponent: ModalComponent;
 
-    ngOnInit() {
-    }
+  constructor() {}
 
-    addEmployee(event) {
-        const copy = Object.assign({}, this.employee);
-        this.onSubmit.emit(copy);
-        this.hide();
-    }
+  ngOnInit() {}
 
-    hide() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('hide');
-    }
+  addEmployee(event) {
+    const copy = Object.assign({}, this.employee);
+    this.onSubmit.emit(copy);
+    this.hide();
+  }
 
-    show() {
-        const divModal = this.getDivModal();
-        $(divModal).modal('show');
-    }
+  hide() {
+    this.modalComponent.hide();
+  }
 
-    private getDivModal(): HTMLElement {
-        const nativeElement: HTMLElement = this.element.nativeElement;
-        return nativeElement.firstChild.firstChild as HTMLElement;
-    }
+  show() {
+    this.modalComponent.show();
+  }
 }
