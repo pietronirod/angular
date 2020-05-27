@@ -12,6 +12,9 @@ import {
 import {
   ModalComponent
 } from '../modal/modal.component';
+import {
+  Modable
+} from '../modal/modable';
 
 declare const $;
 
@@ -20,7 +23,7 @@ declare const $;
   templateUrl: './employee-new-modal.component.html',
   styleUrls: ['./employee-new-modal.component.css']
 })
-export class EmployeeNewModalComponent implements OnInit {
+export class EmployeeNewModalComponent extends Modable implements OnInit {
 
   employee: Employee = {
     name: '',
@@ -31,25 +34,18 @@ export class EmployeeNewModalComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter < Employee > = new EventEmitter < Employee > ();
 
-  @ViewChild(ModalComponent)
-  modalComponent: ModalComponent
+  constructor(private employeeService: EmployeeService) {
+    super()
+  }
 
-  constructor(private employeeService: EmployeeService) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit()
+  }
 
   addEmployee(event) {
     const copy = Object.assign({}, this.employee);
     this.employeeService.addEmployee(copy);
     this.onSubmit.emit(copy);
     this.hide();
-  }
-
-  hide() {
-    this.modalComponent.hide();
-  }
-
-  show() {
-    this.modalComponent.show();
   }
 }

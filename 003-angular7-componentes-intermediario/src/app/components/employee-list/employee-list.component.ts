@@ -58,4 +58,8 @@ export class EmployeeListComponent implements OnInit {
     onDestroyEmployee(employee: Employee) {
         console.log(employee);
     }
+
+    fechou($event) {
+      console.log($event)
+    }
 }

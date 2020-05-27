@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  ElementRef
+  ElementRef,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 declare const $;
@@ -28,6 +30,12 @@ declare const $;
 })
 export class ModalComponent implements OnInit {
 
+  @Output()
+  onHide: EventEmitter<any> = new EventEmitter()
+
+  @Output()
+  onShow: EventEmitter<any> = new EventEmitter()
+
   constructor(private element: ElementRef) {}
 
   ngOnInit() {
@@ -35,14 +43,22 @@ export class ModalComponent implements OnInit {
     nativeElement.querySelector("[modal-title]").classList.add('modal-title');
     nativeElement.querySelector("[modal-body]").classList.add("modal-body");
     nativeElement.querySelector("[modal-footer]").classList.add("modal-footer");
+
+    $(this.divModal).on('hidden.bs.modal', (e) => {
+      this.onHide.emit(e)
+    })
+
+    $(this.divModal).on('shown.bs.modal', (e) => {
+      this.onShow.emit(e)
+    })
   }
 
   hide() {
-    $(this.divModal).modal('hide');
+    $(this.divModal).modal("hide")
   }
 
   show() {
-    $(this.divModal).modal('show');
+    $(this.divModal).modal("show")
   }
 
   private get divModal(): HTMLElement {

@@ -12,6 +12,7 @@ import {
 import {
   ModalComponent
 } from '../modal/modal.component';
+import { Modable } from '../modal/modable';
 
 declare const $;
 
@@ -20,7 +21,7 @@ declare const $;
   templateUrl: './employee-edit-modal.component.html',
   styleUrls: ['./employee-edit-modal.component.css']
 })
-export class EmployeeEditModalComponent implements OnInit {
+export class EmployeeEditModalComponent extends Modable implements OnInit {
 
   @Input()
   employee: Employee;
@@ -28,24 +29,17 @@ export class EmployeeEditModalComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter < Employee > = new EventEmitter < Employee > ();
 
-  @ViewChild(ModalComponent)
-  modalComponent: ModalComponent;
+  constructor() {
+    super()
+  }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit()
+  }
 
   addEmployee(event) {
     const copy = Object.assign({}, this.employee);
     this.onSubmit.emit(copy);
     this.hide();
-  }
-
-  hide() {
-    this.modalComponent.hide();
-  }
-
-  show() {
-    this.modalComponent.show();
   }
 }
